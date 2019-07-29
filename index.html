@@ -134,7 +134,7 @@
         function getHtml(url) {
           var ext = url.split('.').pop().toLowerCase();
         
-          if (ext == 'mp4') {
+          if (ext == 'mp4' || ext == 'webm') {
             return '<video controls class="media"><source src="'+url+'" type="video/'+ext+'"></video>';
           } else if (ext == 'mp3') {
             return '<audio controls class="media"><source src="'+url+'" type="audio/'+ext+'"></audio>';
