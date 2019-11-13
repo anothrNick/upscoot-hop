@@ -10,4 +10,7 @@ $ yarn install
 
 # run local server / start in browser
 $ yarn start
+
+# deploy to github pages
+$ yarn run deploy
 ```
