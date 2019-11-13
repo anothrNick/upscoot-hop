@@ -2,7 +2,7 @@
   "name": "upscoot-hop",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://anothrnick.github.io/upscoot-hop",
+  "homepage": "http://up.sc0tt.net/",
   "dependencies": {
     "antd": "^3.25.1",
     "gh-pages": "^2.1.1",

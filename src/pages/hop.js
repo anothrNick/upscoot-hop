@@ -38,9 +38,9 @@ class Hop extends Component {
   getMedia = (url) => {
     var ext = url.split('.').pop().toLowerCase();
   
-    if (ext == 'mp4' || ext == 'webm') {
+    if (ext === 'mp4' || ext === 'webm') {
       return (<video controls class="media"><source src={url} type={`video/${ext}`} /></video>);
-    } else if (ext == 'mp3') {
+    } else if (ext === 'mp3') {
       return (<audio controls class="media"><source src={url} type={`audio/${ext}`} /></audio>);
     } else if (image_types.includes(ext)) {
       return (<a href={url}><img src={url} alt={url} /></a>);

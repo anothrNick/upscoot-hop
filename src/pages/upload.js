@@ -54,28 +54,31 @@ class UpScootUpload extends Component {
       formData.append("pass", pass);
       formData.append("h", h);
       
-      fetch("https://i.sc0tt.net/", {
-        method: "POST",
-        body: formData
-      }).then(function (res) {
-        console.log(res);
-        if (res.ok) {
-          // all good
-          dis.setState({uploading: false, msg: {type: "success", content: "Successfully uploaded!"}});
-        } else if (res.status === 301) {
-          if (res.redirected) {
-            window.location.href = res.url;
+      try {
+        fetch("https://i.sc0tt.net/", {
+          method: "POST",
+          body: formData,
+          redirect: 'follow'
+        }).then(function (res) {
+          console.log(res);
+          if (res.ok) {
+            // all good
+            dis.setState({uploading: false, msg: {type: "success", content: "Successfully uploaded!"}});
+          } else if (res.status === 301) {
+            if (res.redirected) {
+              window.location.href = res.url;
+            }
+          } else{
+            dis.setState({uploading: false, msg: {type: "error", content: "Failed to upload: " + res.status}});
           }
-        } else{
-          dis.setState({uploading: false, msg: {type: "error", content: "Failed to upload: " + res.status}});
-        }
-      }, function (e) {
-        console.log(e);
+        }, function (e) {
+          dis.setState({uploading: false, msg: {type: "error", content: "Error uploading: " + JSON.stringify(e)}});
+        }).catch(function(e){
+          dis.setState({uploading: false, msg: {type: "error", content: "Error uploading: " + JSON.stringify(e)}});
+        });
+      } catch (e) {
         dis.setState({uploading: false, msg: {type: "error", content: "Error uploading: " + JSON.stringify(e)}});
-      }).catch(function(e){
-        console.log(e);
-        dis.setState({uploading: false, msg: {type: "error", content: "Error uploading: " + JSON.stringify(e)}});
-      });
+      }
     } else {
       this.setState({uploading: false, msg: {type: "warning", content: "Please fill out all fields"}});
     }
