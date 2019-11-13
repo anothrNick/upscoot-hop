@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { 
-  Card
-} from 'antd';
+// import { 
+//   Card
+// } from 'antd';
 
 
 class Hop extends Component {

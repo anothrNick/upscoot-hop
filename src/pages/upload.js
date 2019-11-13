@@ -54,18 +54,18 @@ class UpScootUpload extends Component {
       formData.append("pass", pass);
       formData.append("h", h);
       
-      fetch("/", {
+      fetch("https://i.sc0tt.net/", {
         method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "type": "formData"
-        },
         body: formData
       }).then(function (res) {
         console.log(res);
         if (res.ok) {
           // all good
           dis.setState({uploading: false, msg: {type: "success", content: "Successfully uploaded!"}});
+        } else if (res.status === 301) {
+          if (res.redirected) {
+            window.location.href = res.url;
+          }
         } else{
           dis.setState({uploading: false, msg: {type: "error", content: "Failed to upload: " + res.status}});
         }
