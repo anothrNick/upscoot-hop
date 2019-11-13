@@ -45,3 +45,60 @@ code {
   margin-bottom: 15px;
   width: 100%;
 }
+
+.center {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.urow {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  padding: 0;
+}
+
+/* Create four equal columns that sits next to each other */
+.ucolumn {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}
+
+.ucolumn:first-child {
+  padding-left: 0px
+}
+
+.ucolumn:last-child {
+  padding-right: 0px
+}
+
+.ucolumn img, .ucolumn video, .ucolumn audio {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+  .ucolumn {
+    -ms-flex: 50%;
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .ucolumn {
+    -ms-flex: 100%;
+    flex: 100%;
+    max-width: 100%;
+    padding: 0px;
+  }
+}
