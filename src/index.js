@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Switch, Redirect, NavLink } from 'react-router-dom';
-import { createHashHistory }  from 'history';
+import { BrowserRouter, Route, Switch, Redirect, NavLink } from 'react-router-dom';
 import { 
   Layout, 
   Menu
@@ -14,22 +13,20 @@ import './index.css';
 
 const { Header, Footer, Content } = Layout;
 
-const history = createHashHistory();
-
 function App() {
   return (
-		<Router history={history}>
+		<BrowserRouter basename={process.env.PUBLIC_URL}>
       <Layout className="layout">
         <Header>
           <div className="logo" />
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={[window.location.hash]}
+            defaultSelectedKeys={[window.location.pathname]}
             style={{ lineHeight: '64px', float: 'right' }}
           >
-            <Menu.Item key="#/upload"><NavLink to="/upload">Upload</NavLink></Menu.Item>
-            <Menu.Item key="#/"><NavLink to="/">Hop</NavLink></Menu.Item>
+            <Menu.Item key="/upload"><NavLink to="/upload">Upload</NavLink></Menu.Item>
+            <Menu.Item key="/"><NavLink to="/">Hop</NavLink></Menu.Item>
           </Menu>
         </Header>
         <Content style={{ padding: '50px' }}>
@@ -37,13 +34,13 @@ function App() {
           <Switch>
             <Route path="/upload" component={Upload} />
             <Route path="/" component={Hop} />
-				    <Redirect from="/" to="hop" />
+				    <Redirect to="/" />
           </Switch>
           
         </Content>
         <Footer style={{ textAlign: 'center' }}>upscoot © 2018 - {new Date().getFullYear()}</Footer>
       </Layout>
-    </Router>
+    </BrowserRouter>
   );
 }
 
