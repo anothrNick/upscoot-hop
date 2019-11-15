@@ -38,7 +38,7 @@ function App() {
           </Switch>
           
         </Content>
-        <Footer style={{ textAlign: 'center' }}>upscoot © 2018 - {new Date().getFullYear()}</Footer>
+        <Footer style={{ textAlign: 'center' }}>upscoot © 2018 - {new Date().getFullYear()} | <a href={`legacy.html${window.location.search}`}>Legacy Hop</a></Footer>
       </Layout>
     </BrowserRouter>
   );

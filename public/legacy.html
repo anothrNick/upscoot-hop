@@ -1,0 +1,149 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Hop - Upscoot</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script
+          src="https://code.jquery.com/jquery-3.2.1.min.js"
+          integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+          crossorigin="anonymous"></script>
+        <style>
+          body {
+            font-family: Helvetica;
+            box-sizing: border-box;
+          }
+          h2 {
+            width: 100%;
+            padding: 5px 20px;
+            background-color: #EFEFEF;
+            margin: 0px;
+          }
+          .photos {
+             /* Prevent vertical gaps */
+             line-height: 0;
+             
+             -webkit-column-count: 5;
+             -webkit-column-gap:   0px;
+             -moz-column-count:    5;
+             -moz-column-gap:      0px;
+             column-count:         5;
+             column-gap:           0px;
+          }
+          .photos img, .media {
+            /* Just in case there are inline attributes */
+            width: 100% !important;
+            height: auto !important;
+            padding: 3px;
+          }
+          @media (max-width: 1200px) {
+            .photos, .media {
+            -moz-column-count:    4;
+            -webkit-column-count: 4;
+            column-count:         4;
+            }
+          }
+          @media (max-width: 1000px) {
+            .photos, .media {
+            -moz-column-count:    3;
+            -webkit-column-count: 3;
+            column-count:         3;
+            }
+          }
+          @media (max-width: 800px) {
+            .photos, .media {
+            -moz-column-count:    2;
+            -webkit-column-count: 2;
+            column-count:         2;
+            }
+          }
+          @media (max-width: 400px) {
+            .photos, .media {
+            -moz-column-count:    1;
+            -webkit-column-count: 1;
+            column-count:         1;
+            }
+          }
+          body {
+            margin: 0;
+            padding: 0;
+          }
+        </style>
+    </head>
+    <body>
+      <div style="overflow: auto;">
+        <button style="float:left;" onclick="selectDay(-1)">Previous</button>
+        <button style="float:right;" onclick="selectDay(1)">Next</button>
+      </div>
+      <div id="photos-container"></div>
+
+      <script type="text/javascript">
+        var image_types = ["jpg", "png", "gif", "jpeg", "webp"];
+        var month = getParameterByName('m'); // "lorem"
+        var day = getParameterByName('d');
+        var query_params = [];
+        var query_string = "";
+        if(month) {
+          query_params.push("m="+month);
+        }
+        if(day) {
+          query_params.push("d="+day);
+        }
+        if(query_params.length) {
+          query_string = "?" + query_params.join("&")
+        }
+        function selectDay(val) {
+          if(!day) {
+            var dt = new Date();
+            day = dt.getDate()
+            month = dt.getMonth() + 1;
+          }
+          // TODO:
+          // support month change
+          var newday = parseInt(day)+val;
+          window.location.href = window.location.href + "?d="+newday+"&m="+month;
+        }
+        $.ajax({
+          'method': 'GET',
+          'url': 'https://i.sc0tt.net/hop.json' + query_string,
+          'success': function(response){
+            console.log(response);
+            var allImages = "";
+            for(var year in response) {
+              allImages += "<h2>"+year+"</h2><section class='photos'>";
+              for (var i = 0; i < response[year].length; i++) {
+                var img = response[year][i];
+                allImages += getHtml(img);
+              }
+              allImages += "</section>";
+            }
+            $('#photos-container').append(allImages);
+          }
+        });
+        function getHtml(url) {
+          var ext = url.split('.').pop().toLowerCase();
+        
+          if (ext == 'mp4') {
+            return '<video controls class="media"><source src="'+url+'" type="video/'+ext+'"></video>';
+          } else if (ext == 'mp3') {
+            return '<audio controls class="media"><source src="'+url+'" type="audio/'+ext+'"></audio>';
+          } else if (image_types.includes(ext)) {
+            return '<a href='+url+'><img src="'+url+'" alt="'+url+'"></a>';
+          } else {
+            return url;
+          }
+        }
+        function getParameterByName(name, url) {
+          if (!url) url = window.location.href;
+          name = name.replace(/[\[\]]/g, "\\$&");
+          var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+              results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return '';
+          return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+      </script>
+    </body>
+</html>
